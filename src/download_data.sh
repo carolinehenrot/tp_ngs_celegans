@@ -9,3 +9,4 @@ do
 done
 
 #zcat SRR5564855_1.fastq.gz |head -n10 pour afficher les premières séquences
+

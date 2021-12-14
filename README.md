@@ -34,6 +34,16 @@ le faire sur le dossier processed data
 
 #Salmon
 on fait tout d'abord une indexation : on prémache le génome pour que ce soit plus facile après de faire du mapping
+on crée un index du transcriptome ce qui va faciliter le mapping avec celegans_index
+Quand on regarde les données quant de salmon:
+- TPM: transcript per million, indique l'abondance relative des transcrits. Vu que Salmon ne fait pas des comptages absolus mais compare les données avec le pr-mapping c'est plus précis qu'il renvoie ces valeurs relatives)
+- Nbr de reads mapped on each transcripts
 
-
-
+#tximport
+regroupe les données quants issues de salmon par gènes dans un tableau (longueur transcrit, counts...)
+je visualise les résutats avec plot:
+- soit vulcano plot par exemple mutant vs wt. on utilse log1P car les données sont très étalées
+(des gènes bcp plus exprimés que les autres --> applatis le graphe)
+- soit box plot pour des gènes intéressants identifiés sur le vulcano
+on les sépare en faisant un petit gating avec head. 
+puis ont les plot en fonction de mut/ wt par gène

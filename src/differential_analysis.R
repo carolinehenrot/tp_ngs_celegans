@@ -23,19 +23,24 @@ for(i in c(466, 1008, 12197)){ #on reprend les numéros des gènes qui sont ress
 }
 
 library(DESeq2)
-colData=data.frame(paths,rep(c("Arg2","WT"),e=3))
+colData=data.frame(paths,factor(rep(c("Alg2","WT"),e=3), levels=c("WT","Alg2")))
 colnames(colData)=c("sample","treatment") #création du vecteur avec les valeurs des échantillons et traitement
 dp=DESeqDataSetFromMatrix(round(data$counts),colData = colData,design=~treatment) #round: arrondit à l'unité
-exit=DESeq(dp,test="Wald")
+#exit=DESeq(dp,test="Wald")
+exit=DESeq(dp, test="LRT", reduced=~1)
 
 #plotMA(results,ylim=c(-12,12)) #scatter plot on the y-axis vs the mean of normalized counts on the x-axis.
 
 results=results(exit)
-exp_diff=results$padj<0.05 & abs(results$log2FoldChange)>1.5 #je discrimine les pvalues significatives à 0,05 --> gènes exprimés différemment entre wt et arg2
+exp_diff_up=results$padj<0.05 & results$log2FoldChange>1.5 #je discrimine les pvalues significatives à 0,05 --> gènes exprimés différemment entre wt et arg2
 #même si c'est significativement différent on veut de grosses différences (potentiellement un rôle biologique quoi)
+exp_diff_down=results$padj<0.05 & results$log2FoldChange<1.5 #gènes downrégulés chez le mutant
 
-genesofinterest=rownames(exit[na.omit(exp_diff)])
-#on crée un sous-tableau des valeurs de exit pour lesquelles on a exp_diff=True (et na.omit compte les NA, non applicable comme des FALSE )
+genesofinterest_up=rownames(exit[na.omit(exp_diff_up)])
+#on crée un sous-tableau des valeurs de exit pour lesquelles on a exp_diff=True (et na.omit compte les NA, non applicables, comme des FALSE )
+genesofinterest_down=rownames(exit[na.omit(exp_diff_down)])
 
-GO = file("results/fGO.data", "w") #w: write car on crée fichier d'écriture
-cat(genesofinterest,sep='\n', file = GO)
+GO_up = file("results/fGO_up.data", "w") #w: write car on crée fichier d'écriture
+cat(genesofinterest_up,sep='\n', file = GO_up)
+GO_down = file("results/fGO_down.data", "w") #w: write car on crée fichier d'écriture
+cat(genesofinterest_down,sep='\n', file = GO_down)

@@ -29,16 +29,17 @@ dp=DESeqDataSetFromMatrix(round(data$counts),colData = colData,design=~treatment
 #exit=DESeq(dp,test="Wald")
 exit=DESeq(dp, test="LRT", reduced=~1)
 
-#plotMA(results,ylim=c(-12,12)) #scatter plot on the y-axis vs the mean of normalized counts on the x-axis.
+#plotMA(results, ylim=c(-12,12)) #scatter plot on the y-axis vs the mean of normalized counts on the x-axis.
+
 
 results=results(exit)
-exp_diff_up=results$padj<0.05 & results$log2FoldChange>1.5 #je discrimine les pvalues significatives à 0,05 --> gènes exprimés différemment entre wt et arg2
+exp_diff_up=results$padj<0.05 & results$log2FoldChange> 1.5 #je discrimine les pvalues significatives à 0,05 --> gènes exprimés différemment entre wt et arg2
 #même si c'est significativement différent on veut de grosses différences (potentiellement un rôle biologique quoi)
-exp_diff_down=results$padj<0.05 & results$log2FoldChange<1.5 #gènes downrégulés chez le mutant
+exp_diff_down=results$padj<0.05 & results$log2FoldChange< -1.5 #gènes downrégulés chez le mutant
 
-genesofinterest_up=rownames(exit[na.omit(exp_diff_up)])
+genesofinterest_up=na.omit(rownames(exit)[exp_diff_up])
 #on crée un sous-tableau des valeurs de exit pour lesquelles on a exp_diff=True (et na.omit compte les NA, non applicables, comme des FALSE )
-genesofinterest_down=rownames(exit[na.omit(exp_diff_down)])
+genesofinterest_down=na.omit(rownames(exit)[exp_diff_down])
 
 GO_up = file("results/fGO_up.data", "w") #w: write car on crée fichier d'écriture
 cat(genesofinterest_up,sep='\n', file = GO_up)

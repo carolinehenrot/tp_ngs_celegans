@@ -39,6 +39,9 @@ Quand on regarde les données quant de salmon:
 - TPM: transcript per million, indique l'abondance relative des transcrits. Vu que Salmon ne fait pas des comptages absolus mais compare les données avec le pr-mapping c'est plus précis qu'il renvoie ces valeurs relatives)
 - Nbr de reads mapped on each transcripts
 
+______
+## 2ème semaine de TP
+
 #tximport
 regroupe les données quants issues de salmon par gènes dans un tableau (longueur transcrit, counts...)
 je visualise les résutats avec plot:
@@ -47,3 +50,10 @@ je visualise les résutats avec plot:
 - soit box plot pour des gènes intéressants identifiés sur le vulcano
 on les sépare en faisant un petit gating avec head. 
 puis ont les plot en fonction de mut/ wt par gène
+
+Je sélectionne les gènes significativement différemment exprimés entre alg2 et wt avec une p-value <0,05. Mais veut quand même une différence significative ET que les écarts d'expression soient assez différent: on met un seuil log2FoldChange > ou < 1,5 pour gènes surexprimés ou sous-exprimés dans le mutant vs WT
+--> création d'une liste de True, False et NA. On fait compter les NA comme des False avec na.omit
+Je mets tout dans un document et je copie-colle la liste dans Wormbase --> étonnamment pour les Alg2 mutés, on met en évidence que la majorité des gènes significativement downrégulés sont impliqués dans la formation de la cuticule. Cela suggère que les alg2 et les wt ne sont pas au même niveau de développement... ou alors juste que alg2 inhibe des gènes de développement, mais à confirmer avec raptor. Dans tous les cas, les auteurs ne mentionnent pas cette catégorie de gènes très présents dans mon analyse
+
+#Raptor
+j'installe Raptor et limma

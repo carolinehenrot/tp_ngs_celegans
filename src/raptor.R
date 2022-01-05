@@ -21,10 +21,11 @@ data$normlog=normalizeBetweenArrays(data$abundance,method = "quantile")
 data$normlog=log1p(data$normlog)
 
 ref=prepare_refdata("Cel_larv_YA","wormRef",n.inter=600)
+#a=load("~/mydatalocal/tp_ngs_celegans/results/alg-1_pseudoage.RData") #valeurs d'Augustin
 
 pseudoage_data=ae(data$normlog,refdata = ref$interpGE, ref.time_series = ref$time.series)
-
-plot(pseudoage_data, groups = colData$treatment, show.boot_estimates = T)
+colors <- c("blue", "red")
+plot(pseudoage_data, groups = colData$treatment, show.boot_estimates = T, color = colors[colData$treatment])
 
 
 getrefTP <-function(ref, ae_obj, ret.idx = TRUE){
@@ -56,6 +57,7 @@ upgenes=read.table("~/mydatalocal/tp_ngs_celegans/results/fGO_up.data")$V1 #read
 downgenes=read.table("~/mydatalocal/tp_ngs_celegans/results/fGO_down.data")$V1
 
 points(comparaison$ref$coefficients[2, comparaison$ovl_genelist %in% upgenes], #je rajoute des points par dessus le plot
-      comparaison$samp$coefficients[2,comparaison$ovl_genelist %in% upgenes],col=3, pch=16)
+      comparaison$samp$coefficients[2,comparaison$ovl_genelist %in% upgenes],col=2, pch=16)
 points(comparaison$ref$coefficients[2, comparaison$ovl_genelist %in% downgenes],
-       comparaison$samp$coefficients[2,comparaison$ovl_genelist %in% downgenes],col=2, pch=16)
+       comparaison$samp$coefficients[2,comparaison$ovl_genelist %in% downgenes],col=3, pch=16)
+cor(comparaison$ref$coefficients[2,],comparaison$samp$coefficients[2,])

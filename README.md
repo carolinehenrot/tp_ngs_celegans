@@ -1,6 +1,6 @@
-TP NGS 2021 Nématode
+# TP NGS 2021 Nématode
 
-#Contexte
+# Contexte
 
 C.elegans est un organisme modèle très utilisé et étudié dans de nombreux domaines (l'immunité, l'embryogénèse, la génétique...). Un de ses avantages est son cycle de génération très rapide et de sa facilité de maintien au laboratoire.
 

@@ -11,7 +11,7 @@ Pour ce TP, nous nous sommes intéressés à la premirère partie, c'est-à-dire
 Nous avons tout d'abord cherché à voir si nous retrouvions leurs résultats, puis nous avons cherché à évaluer l'impact des variations développementales sur l'analyse de ces données.
 
 
-#Première session du TP
+# Première session du TP : téléchargement et cleaning des données, mapping et quantification des transcrits 
 ##  Création de l'environnement github et gitignore
 Nous avons tout d'abord créé l'environnement github et choisi quoi mettre dans les commit.
 
@@ -44,12 +44,12 @@ MINLEN: enlève les reads dont le nombre de bases est < 36 (MINLEN:36)
 L'analyse des données trimmées par fastqc valide que nos reads sont maintenant de bonne qualité. Notamment, il n'y a plus d'adapteurs à la fin des reads comme auparavant.
 
 
-## Mapping sur un génome de référence avec Salmon
+## Mapping et quantification des transcrits avec Salmon
 ### Téléchargement du transcriptome de référence
 Le transcriptome de C.elegans est téléchargé à partir de la base de données ensembl (https://www.ensembl.org/index.html), en utilisant le logiciel wget (script download_genome.sh). Le fichier est dézippé avec gunzip. 
 
 
-### Mapping avec Salmon et quantification des transcrits
+### Mapping et quantification des transcrits
 Nous utilisons le logiciel Salmon, qui permet de quantifier les transcrits à partir de données RNAseq. Il a la partiularité de faire une étape de pseudo-mapping, avec tout d'abord une étape d'indexation du génome (script salmon.sh).
 On crée un index celegans_index du transcriptome, puis on réalise le mapping en utilisant cet index créé. Cela permet un mapping plus rapide. Salmon corrige également des biais classiques comme ceux liés à des enrichissement en GC. Le mapping prend en compte les données forward et reverse pour chaque read.
 
